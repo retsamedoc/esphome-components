@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.esphome/
+build/
+.venv/
+.cache/
+.ruff_cache/

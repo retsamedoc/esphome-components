@@ -1,0 +1,48 @@
+site_name: ESPHome External Components
+site_description: Collection of external ESPHome components and documentation
+site_author: retsamedoc
+
+theme:
+  name: material
+  palette:
+    primary: blue
+    accent: indigo
+  font: Roboto
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.instant
+    - navigation.expand
+    - content.code.copy
+    - search.highlight
+
+nav:
+  - Home: index.md
+  - Components:
+      - Roomba:
+          - Overview: components/roomba/index.md
+          - Getting Started: components/roomba/getting-started.md
+          - Configuration: components/roomba/config.md
+          - Sensors: components/roomba/sensors.md
+          - Compatibility: components/roomba/compatibility.md
+          - Troubleshooting: components/roomba/troubleshooting.md
+          - Architecture:
+              - Overview: components/roomba/architecture.md
+              - C++ Reference: components/roomba/api/index.html
+          - Roadmap: components/roomba/roadmap.md
+          - Release Notes: components/roomba/release-notes.md
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - toc:
+      permalink: true
+
+plugins:
+  - privacy
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/retsamedoc/esphome-components
+  version: !ENV ${DOCS_VERSION}

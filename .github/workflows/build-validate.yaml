@@ -1,0 +1,50 @@
+name: Build Validate
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "components/**"
+      - "examples/**"
+      - ".github/workflows/build-validate.yaml"
+  pull_request:
+    paths:
+      - "components/**"
+      - "examples/**"
+      - ".github/workflows/build-validate.yaml"
+
+concurrency:
+  group: build-validate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        component:
+          - name: roomba
+            example_yaml: examples/roomba.yaml
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install ESPHome
+        run: pip install esphome
+
+      - name: Lint ESPHome YAML (${{ matrix.component.name }})
+        run: esphome lint "${{ matrix.component.example_yaml }}"
+
+      - name: Validate config (${{ matrix.component.name }})
+        run: esphome config "${{ matrix.component.example_yaml }}"
+
+      - name: Compile ESPHome YAML (${{ matrix.component.name }})
+        run: esphome compile "${{ matrix.component.example_yaml }}" --only-generate

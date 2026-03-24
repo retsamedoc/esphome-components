@@ -1,0 +1,54 @@
+name: Quality Checks
+
+on:
+  push:
+    paths:
+      - "components/**"
+      - ".clang-format"
+      - "pyproject.toml"
+      - ".github/workflows/quality.yaml"
+  pull_request:
+    paths:
+      - "components/**"
+      - ".clang-format"
+      - "pyproject.toml"
+      - ".github/workflows/quality.yaml"
+
+concurrency:
+  group: quality-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        component:
+          - name: roomba
+            component_path: components/roomba
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Ruff
+        run: pip install "ruff>=0.5.0"
+
+      - name: Ruff check (${{ matrix.component.name }})
+        run: ruff check "${{ matrix.component.component_path }}"
+
+      - name: Ruff format check (${{ matrix.component.name }})
+        run: ruff format --check "${{ matrix.component.component_path }}"
+
+      - name: Install clang-format
+        run: sudo apt-get update && sudo apt-get install -y clang-format
+
+      - name: clang-format (${{ matrix.component.name }} C++)
+        run: |
+          set -euo pipefail
+          find "${{ matrix.component.component_path }}" -type f \( -name '*.h' -o -name '*.cpp' \) -print0 |
+            xargs -0 -r clang-format --dry-run --Werror

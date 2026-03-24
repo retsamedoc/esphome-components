@@ -120,10 +120,10 @@ enum class Opcode : uint8_t {
  * registration.
  */
 struct PacketDef {
-  uint8_t id;                                   ///< Packet ID used in Roomba OI queries
-  const char *name;                             ///< Human-Readable Sensor Name
-  uint8_t size;                                 ///< Size in bytes
-  uint8_t series_mask;                          ///< Bitmask of supported Roomba series
+  uint8_t id;                                 ///< Packet ID used in Roomba OI queries
+  const char *name;                           ///< Human-Readable Sensor Name
+  uint8_t size;                               ///< Size in bytes
+  uint8_t series_mask;                        ///< Bitmask of supported Roomba series
   void (*decode)(Roomba *, const uint8_t *);  ///< Decode function
 };
 
@@ -211,7 +211,8 @@ constexpr PacketDef PACKETS[] = {
      decode_13},
     {static_cast<uint8_t>(Packet::WHEEL_OVERCURRENTS), "Overcurrents", 1, ROBOT_600 | ROBOT_700 | ROBOT_900, decode_14},
     {static_cast<uint8_t>(Packet::DIRT_DETECT), "Dirt Detect", 1, ROBOT_600 | ROBOT_700 | ROBOT_900, decode_15},
-    {static_cast<uint8_t>(Packet::IR_CHAR_OMNI), "Infrared Character Omni", 1, ROBOT_500 | ROBOT_600 | ROBOT_700 | ROBOT_900, decode_17},
+    {static_cast<uint8_t>(Packet::IR_CHAR_OMNI), "Infrared Character Omni", 1,
+     ROBOT_500 | ROBOT_600 | ROBOT_700 | ROBOT_900, decode_17},
     {static_cast<uint8_t>(Packet::BUTTONS), "Buttons", 1, ROBOT_500 | ROBOT_600 | ROBOT_700 | ROBOT_900, decode_18},
     {static_cast<uint8_t>(Packet::DISTANCE), "Distance", 2, ROBOT_500 | ROBOT_600 | ROBOT_700 | ROBOT_900, decode_19},
     {static_cast<uint8_t>(Packet::ANGLE), "Angle", 2, ROBOT_500 | ROBOT_600 | ROBOT_700 | ROBOT_900, decode_20},
@@ -242,8 +243,10 @@ constexpr PacketDef PACKETS[] = {
      ROBOT_600 | ROBOT_700 | ROBOT_900, decode_50},
     {static_cast<uint8_t>(Packet::LIGHT_BUMP_RIGHT), "Light Bump Right", 1, ROBOT_600 | ROBOT_700 | ROBOT_900,
      decode_51},
-    {static_cast<uint8_t>(Packet::IR_CHAR_LEFT), "Infrared Charater Left", 1, ROBOT_600 | ROBOT_700 | ROBOT_900, decode_52},
-    {static_cast<uint8_t>(Packet::IR_CHAR_RIGHT), "Infrared Charater Right", 1, ROBOT_600 | ROBOT_700 | ROBOT_900, decode_53},
+    {static_cast<uint8_t>(Packet::IR_CHAR_LEFT), "Infrared Charater Left", 1, ROBOT_600 | ROBOT_700 | ROBOT_900,
+     decode_52},
+    {static_cast<uint8_t>(Packet::IR_CHAR_RIGHT), "Infrared Charater Right", 1, ROBOT_600 | ROBOT_700 | ROBOT_900,
+     decode_53},
     {static_cast<uint8_t>(Packet::MOTOR_CURRENT_LEFT), "Left Motor Current", 2, ROBOT_600 | ROBOT_700 | ROBOT_900,
      decode_54},
     {static_cast<uint8_t>(Packet::MOTOR_CURRENT_RIGHT), "Right Motor Current", 2, ROBOT_600 | ROBOT_700 | ROBOT_900,

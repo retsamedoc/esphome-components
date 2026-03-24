@@ -1,0 +1,60 @@
+{
+  "name": "ESPHome Dev",
+  "image": "ghcr.io/esphome/esphome:2026.1.5",
+  "workspaceFolder": "/config",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/config,type=bind",
+  "entrypoint": ["sleep", "infinity"],
+  "postCreateCommand": ["esphome", "version"],
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  "runArgs": ["-e", "GIT_EDITOR=code --wait"],
+  "appPort": 6052,
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.pylint",
+        "ms-python.flake8",
+        "charliermarsh.ruff",
+        "visualstudioexptteam.vscodeintellicode",
+        "redhat.vscode-yaml",
+        "ms-vscode.cpptools",
+        "editorconfig.editorconfig"
+      ],
+      "settings": {
+        "python.languageServer": "Pylance",
+        "python.defaultInterpreterPath": "/usr/local/bin/python3",
+        "[python]": {
+          "editor.defaultFormatter": "charliermarsh.ruff"
+        },
+        "editor.formatOnPaste": false,
+        "editor.formatOnSave": true,
+        "editor.formatOnType": true,
+        "files.trimTrailingWhitespace": true,
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "yaml.customTags": [
+          "!secret scalar",
+          "!lambda scalar",
+          "!extend scalar",
+          "!remove scalar",
+          "!include_dir_named scalar",
+          "!include_dir_list scalar",
+          "!include_dir_merge_list scalar",
+          "!include_dir_merge_named scalar"
+        ],
+        "files.exclude": {
+          "**/.git": true,
+          "**/.DS_Store": true,
+          "**/*.pyc": {
+            "when": "$(basename).py"
+          },
+          "**/__pycache__": true
+        },
+        "files.associations": {
+          "**/.vscode/*.json": "jsonc"
+        }
+      }
+    }
+  }
+}

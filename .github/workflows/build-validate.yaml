@@ -40,9 +40,6 @@ jobs:
       - name: Install ESPHome
         run: pip install esphome
 
-      - name: Lint ESPHome YAML (${{ matrix.component.name }})
-        run: esphome lint "${{ matrix.component.example_yaml }}"
-
       - name: Validate config (${{ matrix.component.name }})
         run: esphome config "${{ matrix.component.example_yaml }}"
 

@@ -28,9 +28,25 @@ nav:
           - Troubleshooting: components/roomba/troubleshooting.md
           - Architecture:
               - Overview: components/roomba/architecture.md
-              - C++ Reference: components/roomba/api/index.html
-          - Roadmap: components/roomba/roadmap.md
-          - Release Notes: components/roomba/release-notes.md
+          - Source Code Reference: 
+            - roomba/index.md
+            - Links: roomba/links.md
+            - Classes:
+              - Class List: roomba/annotated.md
+              - Class Index: roomba/classes.md
+              - Class Hierarchy: roomba/hierarchy.md
+              - Class Members: roomba/class_members.md
+              - Class Member Functions: roomba/class_member_functions.md
+              - Class Member Variables: roomba/class_member_variables.md
+              - Class Member Typedefs: roomba/class_member_typedefs.md
+              - Class Member Enumerations: roomba/class_member_enums.md
+            - Namespaces:
+              - Namespace List: roomba/namespaces.md
+              - Namespace Members: roomba/namespace_members.md
+          - "Functions": "roomba/functions.md"
+          - "Variables": "roomba/variables.md"
+          - "Macros": "roomba/macros.md"
+          - "Files": "roomba/files.md"
 
 markdown_extensions:
   - admonition
@@ -40,9 +56,28 @@ markdown_extensions:
 
 plugins:
   - privacy
+  - open-in-new-tab
+  - mkdoxy:
+      projects:
+        roomba:
+          src-dirs: components/roomba
+          full-doc: True 
+          doxy-cfg: # standard doxygen configuration (key: value)
+            FILE_PATTERNS: "*.cpp *.h*" # specify file patterns to filter out
+            RECURSIVE: True # recursive search in source directories
+            HAVE_DOT: YES
+
 
 extra:
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/retsamedoc/esphome-components
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/retsamedoc
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/retsamedoc
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/retsamedoc            
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/ZacharySchimke/
   version: !ENV ${DOCS_VERSION}

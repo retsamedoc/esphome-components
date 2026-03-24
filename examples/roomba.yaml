@@ -1,0 +1,66 @@
+esphome:
+  name: roomba-test
+  platformio_options:
+    build_flags:
+      - -Wall
+      - -Wextra
+      - -Werror
+      # ESP-IDF / ESPHome uart uses %d for int32_t on some toolchains; keep -Werror otherwise.
+      - -Wno-error=format
+
+esp32:
+  board: esp32dev
+  framework:
+    type: esp-idf
+
+external_components:
+  - source: ../components
+
+logger:
+  baud_rate: 0
+
+uart:
+  tx_pin: GPIO17
+  rx_pin: GPIO16
+  baud_rate: 115200
+
+time:
+  - platform: sntp
+    id: sntp_time
+    on_time:
+      # Daily Roomba clock sync at 03:00 local time.
+      # Adjust this cron expression to sync at a different cadence/time.
+      - seconds: 0
+        minutes: 0
+        hours: 3
+        then:
+          - roomba.set_day_time:
+              id: roomba_ctrl
+
+roomba:
+  id: roomba_ctrl
+  use_stream: true
+  auto_reconnect: true
+  restore_state: false
+  time_id: sntp_time
+
+sensor:
+  - platform: roomba
+    battery:
+      name: "Battery"
+
+binary_sensor:
+  - platform: roomba
+    bump_left:
+      name: "Bump Left"
+    bump_right:
+      name: "Bump Right"
+
+text_sensor:
+  - platform: roomba
+
+    charging_state:
+      name: "Roomba Charging State"
+
+    oi_mode:
+      name: "Roomba Mode"      

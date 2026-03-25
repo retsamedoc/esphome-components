@@ -1,11 +1,9 @@
 # ESPHome External Components Collection
 
-<p align="center">
 ![CI](https://github.com/retsamedoc/esphome-components/actions/workflows/quality.yaml/badge.svg)
 ![License](https://img.shields.io/github/license/retsamedoc/esphome-components)
 ![Maintenance](https://img.shields.io/badge/Maintained-yes-green)
 ![Issues](https://img.shields.io/github/issues/retsamedoc/esphome-components)
-</p>
 
 ## ![ESPHome logo](esphome-logo.png)  What is ESPHome?
 

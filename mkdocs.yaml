@@ -18,6 +18,7 @@ theme:
 
 nav:
   - Home: index.md
+      - License: license.md
   - Roomba:
       - Overview: roomba/index.md
       - Getting Started: roomba/getting-started.md
@@ -38,14 +39,13 @@ nav:
                 - Class Member Variables: roomba/class_member_variables.md
                 - Class Member Typedefs: roomba/class_member_typedefs.md
                 - Class Member Enumerations: roomba/class_member_enums.md
-          - Namespaces:
-              - Namespace List: roomba/namespaces.md
-              - Namespace Members: roomba/namespace_members.md
-      - "Functions": "roomba/functions.md"
-      - "Variables": "roomba/variables.md"
-      - "Macros": "roomba/macros.md"
-      - "Files": "roomba/files.md"
-  - License: license.md
+            - Namespaces:
+                - Namespace List: roomba/namespaces.md
+                - Namespace Members: roomba/namespace_members.md
+            - "Functions": "roomba/functions.md"
+            - "Variables": "roomba/variables.md"
+            - "Macros": "roomba/macros.md"
+            - "Files": "roomba/files.md"
 
 markdown_extensions:
   - admonition

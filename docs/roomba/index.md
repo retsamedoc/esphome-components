@@ -1,7 +1,7 @@
 # ESPHome Roomba OI Component
 
 [![CI](https://github.com/retsamedoc/esphome-components/actions/workflows/quality.yaml/badge.svg)](https://github.com/retsamedoc/esphome-components/actions)
-[![Release](https://img.shields.io/github/v/release/retsamedoc/esphome-components)](https://github.com/retsamedoc/esphome-components/releases)
+[![Issues](https://img.shields.io/github/issues/retsamedoc/esphome-components)](https://github.com/retsamedoc/esphome-components/releases)
 [![License](https://img.shields.io/github/license/retsamedoc/esphome-components)](LICENSE)
 
 > **Notice:** The Roomba component is under active development and is not functional yet.
@@ -16,7 +16,6 @@ using the Open Interface (OI) via UART.
 - Stream/query packets derived from enabled entities
 - Packet-table driven decoding
 - Optional state restore and hardware wake via BRC pin
-- No vacuum platform entity in current codebase (tracked in roadmap)
 
 [Getting Started ->](getting-started.md)
 

@@ -1,4 +1,4 @@
-# Roomba Architecture (Canonical)
+# Roomba Architecture
 
 This document is the single source of truth for architecture and runtime behavior in this repository.
 
@@ -9,8 +9,6 @@ This project provides an ESPHome external component that communicates with Roomb
 - Numeric sensors via `sensor` platform bindings
 - Binary sensors via `binary_sensor` platform bindings
 - Text sensors via `text_sensor` platform bindings
-
-It currently does **not** implement an ESPHome `vacuum` platform entity.
 
 Related docs:
 
@@ -165,7 +163,6 @@ Current YAML-exposed entities:
 
 ## Current Limitations
 
-- No ESPHome `vacuum` platform implementation in this repository
 - Query mode fallback is implemented for one-packet `SENSORS` polling and now follows the same dynamic packet set used by stream mode
 - `oi_mode` text sensor maps to packet `35` and is requested/decoded when enabled
 

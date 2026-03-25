@@ -18,49 +18,60 @@ theme:
 
 nav:
   - Home: index.md
-  - Components:
-      - Roomba:
-          - Overview: components/roomba/index.md
-          - Getting Started: components/roomba/getting-started.md
-          - Configuration: components/roomba/config.md
-          - Sensors: components/roomba/sensors.md
-          - Compatibility: components/roomba/compatibility.md
-          - Troubleshooting: components/roomba/troubleshooting.md
+  - Roomba:
+          - Overview: roomba/index.md
+          - Getting Started: roomba/getting-started.md
+          - Configuration: roomba/config.md
+          - Sensors: roomba/sensors.md
+          - Compatibility: roomba/compatibility.md
+          - Troubleshooting: roomba/troubleshooting.md
           - Architecture:
-              - Overview: components/roomba/architecture.md
-          - Source Code Reference: 
-            - roomba/index.md
-            - Links: roomba/links.md
-            - Classes:
-              - Class List: roomba/annotated.md
-              - Class Index: roomba/classes.md
-              - Class Hierarchy: roomba/hierarchy.md
-              - Class Members: roomba/class_members.md
-              - Class Member Functions: roomba/class_member_functions.md
-              - Class Member Variables: roomba/class_member_variables.md
-              - Class Member Typedefs: roomba/class_member_typedefs.md
-              - Class Member Enumerations: roomba/class_member_enums.md
-            - Namespaces:
+              - Overview: roomba/architecture.md
+              - C++ Reference:
+                - Links: roomba/links.md
+                - Classes:
+                  - Class List: roomba/annotated.md
+                  - Class Index: roomba/classes.md
+                  - Class Hierarchy: roomba/hierarchy.md
+                  - Class Members: roomba/class_members.md
+                  - Class Member Functions: roomba/class_member_functions.md
+                  - Class Member Variables: roomba/class_member_variables.md
+                  - Class Member Typedefs: roomba/class_member_typedefs.md
+                  - Class Member Enumerations: roomba/class_member_enums.md
+                - Namespaces:
               - Namespace List: roomba/namespaces.md
               - Namespace Members: roomba/namespace_members.md
           - "Functions": "roomba/functions.md"
           - "Variables": "roomba/variables.md"
           - "Macros": "roomba/macros.md"
           - "Files": "roomba/files.md"
+  - License: license.md
 
 markdown_extensions:
   - admonition
   - codehilite
   - toc:
       permalink: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
 
 plugins:
+  - typeset
   - privacy
   - open-in-new-tab
   - mkdoxy:
       projects:
         roomba:
-          src-dirs: components/roomba
+          src-dirs: roomba
           full-doc: True 
           doxy-cfg: # standard doxygen configuration (key: value)
             FILE_PATTERNS: "*.cpp *.h*" # specify file patterns to filter out
@@ -74,10 +85,6 @@ extra:
       link: https://github.com/retsamedoc/esphome-components
     - icon: fontawesome/brands/twitter
       link: https://twitter.com/retsamedoc
-    - icon: fontawesome/brands/twitter
-      link: https://twitter.com/retsamedoc
-    - icon: fontawesome/brands/twitter
-      link: https://twitter.com/retsamedoc            
     - icon: fontawesome/brands/linkedin
       link: https://www.linkedin.com/in/ZacharySchimke/
   version: !ENV ${DOCS_VERSION}

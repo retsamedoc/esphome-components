@@ -16,6 +16,11 @@ on:
       - "mkdocs.yaml"
       - ".github/workflows/docs.yaml"
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 concurrency:
   group: docs-${{ github.ref }}
   cancel-in-progress: true

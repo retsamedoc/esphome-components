@@ -4,6 +4,7 @@
  */
 #include "roomba.h"
 #include "protocol.h"
+#include "roomba_ascii.h"
 
 #include "esphome/core/application.h"
 #include "esphome/core/log.h"
@@ -240,6 +241,7 @@ void Roomba::recover_roomba_(bool is_boot) {
   this->state_ = ParseState::WAIT_HEADER;
   this->payload_fill_ = 0;
   this->reset_query_state_();
+  roomba_ascii_reset_state(&this->ascii_line_, &this->dock_bat_status_active_);
 
   this->nudge_roomba_();
 
@@ -307,9 +309,12 @@ void Roomba::parse_byte_(uint8_t b) {
   switch (this->state_) {
     case ParseState::WAIT_HEADER:
       if (b == 19) {  // Header byte (start of sensor stream)
+        roomba_ascii_discard_buffer(&this->ascii_line_);
         this->payload_fill_ = 0;
         this->checksum_ = b;
         this->state_ = ParseState::WAIT_LENGTH;
+      } else {
+        roomba_ascii_feed_wait_header_byte(&this->ascii_line_, b, &this->dock_bat_status_active_);
       }
       break;
 

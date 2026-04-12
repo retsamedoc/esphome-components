@@ -15,9 +15,13 @@ This file tracks architecture and feature work that is not fully implemented in 
 ## Mid Term
 - **BRC watchdog (periodic keep-awake):** optional timed BRC nudges when the robot might sleep without UART traffic, analogous to upstream “lazy 650+” periodic wakeup (interval and pulse policy TBD; see `docs/roomba/references/RoombaComponent-wakeup-spec.md` for reference behavior).
 - **Dock wake routine:** when activity state indicates docked, run a BRC pulse followed by the documented Clean/Dock opcode sequence so docked units stay responsive—**depends on the activity state text sensor** above. Implement as a dedicated helper aligned with existing names (`nudge_roomba_()`, `wake_roomba_()`, etc.), not as a port of upstream symbol names.
-- Capture and Interprete non-OI mode Strings
-  - Use as alternate sources while sleeping on dock
-  - Capture additional diagnostic info at Roomba boot (firmware version, etc)
+- Capture and interpret non-OI mode strings (UART CRLF text when OI stream framing is absent)
+  - **Implemented (v1):** log-only parsing in `roomba_ascii.cpp` (`roomba_ascii_feed_wait_header_byte`, line classification) — dock `bat:`, firmware release (`r3_robot/…`, `release-stm32-…`, `release-…`), boot/RESET diagnostics, `key-wakeup`, etc.
+  - **Future:** expose parsed values as ESPHome entities where useful:
+    - `bat:` fields (dock time, voltage, current, temperature, charge, state, mode)
+    - **firmware_release** and **microcontroller** (ST id line) as `text_sensor` or attributes
+    - **battery-current-zero**, optional **button** / **sleep** indicators
+  - Use as alternate telemetry while docked (~1 Hz ASCII) and at boot / after OI `RESET` (opcode 7)
 - Roomba OI Version Gate
   - Configuration item to specify Roomba model
   - Gate packet subscriptions and warnings by capability

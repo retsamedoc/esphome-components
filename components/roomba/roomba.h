@@ -15,6 +15,8 @@
 #include "esphome/components/uart/uart.h"
 #include "esphome/core/automation.h"
 
+#include "roomba_ascii.h"
+
 #ifndef ROOMBA_MAX_OUTPUTS
 #define ROOMBA_MAX_OUTPUTS 32
 #endif
@@ -197,6 +199,10 @@ class Roomba : public Component, public uart::UARTDevice {
   bool query_pending_{false};
   uint32_t query_started_at_{0};
   uint8_t query_poll_index_{0};
+
+  // Non-OI ASCII (CRLF lines when OI stream header 0x13 is absent); see roomba_ascii.cpp
+  RoombaAsciiLineBuffer ascii_line_{};
+  bool dock_bat_status_active_{false};
 
   // Outputs
 

@@ -128,10 +128,11 @@ class Roomba : public Component, public uart::UARTDevice {
   /** Clear pending query state and buffered response bytes. */
   void reset_query_state_();
 
-  /** Wake the robot using a short BRC pulse when configured. */
+  /** Nudge the robot using a short BRC pulse when configured. */
+  void nudge_roomba_();
+  /** Wake the robot using a long BRC pulse when configured. */
   void wake_roomba_();
-  /** Long BRC pulse (same timing as hard_reset_) without logging; no-op if no BRC pin. */
-  void long_brc_pulse_reset_();
+  
   /**
    * @brief Reinitialize parser state and OI session.
    * @param is_boot True when called from initial component setup.

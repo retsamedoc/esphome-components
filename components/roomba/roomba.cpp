@@ -86,6 +86,7 @@ void Roomba::loop() {
         this->recover_roomba_(false);
         this->recovery_attempts_ = 1;
       } else if (silence > 7000 && this->recovery_attempts_ == 1) {
+        this->wake_roomba_();
         this->recover_roomba_(false);
         this->recovery_attempts_ = 2;
       } else if (silence > 15000 && this->recovery_attempts_ >= 2) {
@@ -159,13 +160,28 @@ void Roomba::set_day_time() {
 
 /* ================= RECOVERY ================= */
 
+/** @brief Keep the robot awake through a short BRC pulse when the pin is configured. */
+void Roomba::nudge_roomba_() {
+  if (!this->brc_pin_)
+    return;
+
+  ESP_LOGI(TAG, "Nudge Roomba");
+
+  this->brc_pin_->digital_write(false);
+  delay(100);
+  this->brc_pin_->digital_write(true);
+  delay(2000);
+}
+
 /** @brief Wake the robot through BRC pulse when the pin is configured. */
 void Roomba::wake_roomba_() {
   if (!this->brc_pin_)
     return;
 
+  ESP_LOGI(TAG, "Wake Roomba");
+
   this->brc_pin_->digital_write(false);
-  delay(100);
+  delay(500);
   this->brc_pin_->digital_write(true);
   delay(2000);
 }
@@ -175,10 +191,10 @@ void Roomba::hard_reset_() {
   if (!this->brc_pin_)
     return;
 
-  ESP_LOGE(TAG, "Hard reset");
+  ESP_LOGI(TAG, "Hard reset");
 
   this->brc_pin_->digital_write(false);
-  delay(500);
+  delay(1000);
   this->brc_pin_->digital_write(true);
   delay(2000);
 }
@@ -225,7 +241,7 @@ void Roomba::recover_roomba_(bool is_boot) {
   this->payload_fill_ = 0;
   this->reset_query_state_();
 
-  this->wake_roomba_();
+  this->nudge_roomba_();
 
   for (int i = 0; i < 3; i++) {
     this->send_opcode(static_cast<uint8_t>(Opcode::START));

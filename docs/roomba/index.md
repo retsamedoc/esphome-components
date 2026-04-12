@@ -15,7 +15,7 @@ using the Open Interface (OI) via UART.
 - Sensor, binary sensor, and text sensor integration
 - Stream/query packets derived from enabled entities
 - Packet-table driven decoding
-- Optional state restore and hardware wake via BRC pin
+- Optional state restore and hardware wake via BRC pin (open-drain output by default)
 
 [Getting Started ->](getting-started.md)
 

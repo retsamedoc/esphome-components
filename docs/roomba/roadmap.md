@@ -3,6 +3,7 @@
 This file tracks architecture and feature work that is not fully implemented in the current codebase.
 
 ## Near Term
+- **Activity state text sensor:** derive and publish high-level state as one text sensor: **Docked**, **Cleaning**, and **Idle** (not docked and not cleaning), from existing packet data (for example current, charging state, and related signals). This becomes the basis for smarter BRC and dock-targeted behavior later.
 - Improve startup and recovery sequences to improve OI mode initialization.
 - Convert `send_opcode()` from a rate limiting function to a message queue
   - Instead of dropping packets, we queue them up to ensure nothing is missed
@@ -12,6 +13,8 @@ This file tracks architecture and feature work that is not fully implemented in 
   - Refactor code to switch `PACKETS[]` -> codegen `ENTITIES[]`
 
 ## Mid Term
+- **BRC watchdog (periodic keep-awake):** optional timed BRC nudges when the robot might sleep without UART traffic, analogous to upstream “lazy 650+” periodic wakeup (interval and pulse policy TBD; see `docs/roomba/references/RoombaComponent-wakeup-spec.md` for reference behavior).
+- **Dock wake routine:** when activity state indicates docked, run a BRC pulse followed by the documented Clean/Dock opcode sequence so docked units stay responsive—**depends on the activity state text sensor** above. Implement as a dedicated helper aligned with existing names (`nudge_roomba_()`, `wake_roomba_()`, etc.), not as a port of upstream symbol names.
 - Capture and Interprete non-OI mode Strings
   - Use as alternate sources while sleeping on dock
   - Capture additional diagnostic info at Roomba boot (firmware version, etc)

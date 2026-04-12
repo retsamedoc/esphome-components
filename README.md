@@ -45,7 +45,7 @@ Key features:
 - Stream mode with reconnect recovery (and a fallback to query mode)
 - Battery Health (voltage, current), Cleaning State, and telemetry (distance, angle) sensors
 - Command automation actions for CLEAN/SEEK_DOCK/STOP/RESET
-- Hardware wake/reset via BRC pin (optional but recommended!)
+- Hardware wake/reset via BRC pin (optional but recommended; configured as open-drain output by default)
 - Optional Roomba time/date sync via the `[time](https://esphome.io/components/time)` component.
 
 More information (including detailed instructions) can be found in the component's docs: [`docs/roomba/index.md`](https://retsamedoc.github.io/esphome-components/roomba/).

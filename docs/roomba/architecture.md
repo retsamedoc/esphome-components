@@ -40,7 +40,7 @@ Related docs:
 ### ESPHome codegen (Python)
 
 - `components/roomba/__init__.py`
-  - Component config schema (`use_stream`, `auto_reconnect`, `restore_state`, optional `brc_pin`, optional `time_id`)
+  - Component config schema (`use_stream`, `auto_reconnect`, `restore_state`, optional `brc_pin` defaulting to open-drain output, optional `time_id`)
   - Adds compile-time `ROOMBA_MAX_OUTPUTS` define
   - Registers command automation actions (`start_clean`, `dock`, `stop`, `reset`, `set_day_time`)
 - `components/roomba/sensor.py`
@@ -108,16 +108,16 @@ Configured under the `roomba` component:
 - `use_stream` (default `true`)
 - `auto_reconnect` (default `true`)
 - `restore_state` (default `false`)
-- `brc_pin` (optional GPIO output pin)
+- `brc_pin` (optional GPIO open-drain output pin by default)
 - `time_id` (optional `time` component reference for Roomba clock sync)
 
 ## Recovery and Resilience
 
-Recovery behavior in `loop()` is silence-based when `auto_reconnect` is enabled:
+Recovery behavior in `loop()` is silence-based when `auto_reconnect` is enabled (and after an initial reconnect grace period):
 
-- After ~3s silence: call `recover_roomba_(false)`
-- After ~7s silence: call `recover_roomba_(false)` again
-- After ~15s silence: `hard_reset_()` (if BRC configured), then recover
+- After ~3s silence: call `recover_roomba_(false)` (includes a short BRC pulse via `nudge_roomba_()` when `brc_pin` is configured)
+- After ~7s silence: call `wake_roomba_()` (longer BRC pulse), then `recover_roomba_(false)` again
+- After ~15s silence: `hard_reset_()` (longest BRC pulse when configured), then `recover_roomba_(false)`
 
 `recover_roomba_()` currently does:
 

@@ -32,6 +32,8 @@ roomba:
   brc_pin: GPIO5
 ```
 
+`brc_pin` defaults to open-drain output; for typical Roomba wiring you only need the pin number as above (the line is pulled up on the robot or your level shifter so it sits high when the pin is released).
+
 ## 3) Add Entities
 
 ```yaml

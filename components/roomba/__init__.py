@@ -8,7 +8,7 @@ from esphome import automation, pins
 import esphome.codegen as cg
 from esphome.components import time, uart
 import esphome.config_validation as cv
-from esphome.const import CONF_ID
+from esphome.const import CONF_ID, CONF_MODE, CONF_NUMBER, CONF_OPEN_DRAIN, CONF_OUTPUT
 
 DEPENDENCIES = ["uart"]
 AUTO_LOAD = ["sensor", "binary_sensor", "text_sensor", "time"]
@@ -28,13 +28,29 @@ DockAction = roomba_ns.class_("DockAction", automation.Action)
 StopAction = roomba_ns.class_("StopAction", automation.Action)
 ResetAction = roomba_ns.class_("ResetAction", automation.Action)
 
+
+def brc_pin_default_open_drain(value):
+    """Default BRC to open-drain output; users may override via ``mode``."""
+    if isinstance(value, dict):
+        if CONF_MODE not in value:
+            return {
+                **value,
+                CONF_MODE: {CONF_OUTPUT: True, CONF_OPEN_DRAIN: True},
+            }
+        return value
+    return {
+        CONF_NUMBER: value,
+        CONF_MODE: {CONF_OUTPUT: True, CONF_OPEN_DRAIN: True},
+    }
+
+
 CONFIG_SCHEMA = cv.Schema(
     {
         cv.GenerateID(): cv.declare_id(Roomba),
         cv.Optional(CONF_USE_STREAM, default=True): cv.boolean,
         cv.Optional(CONF_AUTO_RECONNECT, default=True): cv.boolean,
         cv.Optional(CONF_RESTORE_STATE, default=False): cv.boolean,
-        cv.Optional(CONF_BRC_PIN): pins.gpio_output_pin_schema,
+        cv.Optional(CONF_BRC_PIN): cv.All(brc_pin_default_open_drain, pins.gpio_output_pin_schema),
         cv.Optional(CONF_TIME_ID): cv.use_id(time.RealTimeClock),
     }
 ).extend(uart.UART_DEVICE_SCHEMA)

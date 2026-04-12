@@ -12,7 +12,16 @@
 - Check grounding between ESP device and Roomba interface.
 - Validate level shifting for signal integrity.
 - Review power supply stability for both boards.
-- If using `brc_pin`, verify pin wiring and polarity.
+- If using `brc_pin`, verify pin wiring and polarity. The pin is open-drain by default: it pulls BRC low during pulses and releases the line when idle, so it does **not** actively drive high. If BRC never reads high when idle, check that a pull-up is present on the line (often on the Roomba side).
+
+## Sleep / Wake-up (known firmware issue)
+
+There is a known sleep/wakeup bug on some robots (commonly reported on the **600 series**) when the onboard firmware is older than:
+
+- `release-3.8.2`
+- `release-stm32-3.7.7`
+
+A workaround is being considered where the BRC pin is treated more akin to a watchdog than a wake/sleep pin (Roomba _never_ sleeps). Another fix used by Thinking Cleaner is to issue a CLEAN then DOCK command after a BRC wake pulse.
 
 ## Stream Mode Expectations
 

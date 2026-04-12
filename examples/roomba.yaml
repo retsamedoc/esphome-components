@@ -45,6 +45,7 @@ roomba:
   use_stream: true
   auto_reconnect: true
   restore_state: false
+  brc_pin: GPIO4
   time_id: sntp_time
 
 sensor:

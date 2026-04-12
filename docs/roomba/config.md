@@ -62,7 +62,7 @@ text_sensor:
 | `use_stream` | bool | true | Enable OI stream mode (`STREAM` opcode 148) and the stream frame parser. When `false`, the component polls with `SENSORS` (142) on the same packet list. Use query mode if your robot never sends stream frames (UART works but stream stays silent). |
 | `auto_reconnect` | bool | true | Silence-based recovery: after a grace period following each recovery, if no UART bytes arrive for several seconds, the component re-runs the wake/START/SAFE sequence (and stream if enabled). A **minimum interval** between automatic recoveries avoids hammering the robot when stream never starts. Set `false` if you want to avoid reconnects while debugging. |
 | `restore_state` | bool | false | Re-issue last command after recovery (non-boot only). |
-| `brc_pin` | GPIO | null | Optional wake/reset pin for BRC pulses. |
+| `brc_pin` | GPIO | null | Optional wake/reset pin for BRC pulses. Defaults to **open-drain output**: idle is implemented by releasing the line (not actively driving high). Set an explicit `mode` on the pin if you need push-pull instead. |
 | `time_id` | time ID | null | Optional ESPHome time source used to send Roomba `SET_DAY_TIME` once when time first becomes valid after boot. |
 
 
@@ -75,6 +75,7 @@ logger:
   baud_rate: 0
 ```
 * Beware of IO voltage (Roomba OI is usually 5V)
+* With `brc_pin`, open-drain output matches typical BRC wiring (pulse by pulling low; release for idle).
 * Stream mode is preferred for reliability
 * Stream/query packet requests are auto-derived from enabled entities in your YAML
 * If an entity is not configured, its packet is not requested
